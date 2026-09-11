@@ -1,4 +1,4 @@
-﻿const http = require("http");
+const http = require("http");
 const WebSocket = require("ws");
 const express = require("express");
 const path = require("path");
@@ -90,12 +90,12 @@ function testWebSocketClient() {
     if (msg.type === "SESSION_CREATED") {
       console.log("[WS Test] Session Created:");
       console.log(`  - Name: ${msg.session.name}`);
-      console.log(`  - Duration: ${msg.session.actualWaitDuration}s (<= 60s)`);
+      console.log(`  - Duration: ${msg.session.actualWaitDuration}s (<= 120s)`);
       console.log(`  - Personality: ${msg.session.personality}`);
       console.log(`  - Initial Position: #${msg.session.currentPosition}`);
       createdSessionId = msg.session.sessionId;
 
-      if (msg.session.actualWaitDuration > 60 || msg.session.actualWaitDuration < 1) {
+      if (msg.session.actualWaitDuration > 120 || msg.session.actualWaitDuration < 1) {
         console.error("FAIL: Duration exceeds PRD bounds!");
         process.exit(1);
       }

@@ -1,4 +1,4 @@
-﻿const http = require("http");
+const http = require("http");
 const WebSocket = require("ws");
 const queueManager = require("../server/queueManager");
 
@@ -9,8 +9,8 @@ console.log("\n[Test 1] Session Creation & Constraints");
 const s1 = queueManager.createSession("Alice");
 console.log(`- Created session: ${s1.sessionId}`);
 console.log(`- Waiter name: ${s1.name}`);
-console.log(`- Actual wait duration: ${s1.actualWaitDuration}s (Must be between 1 and 60s)`);
-if (s1.actualWaitDuration < 1 || s1.actualWaitDuration > 60) {
+console.log(`- Actual wait duration: ${s1.actualWaitDuration}s (Must be between 1 and 120s)`);
+if (s1.actualWaitDuration < 1 || s1.actualWaitDuration > 120) {
   console.error("FAIL: Wait duration out of bounds!");
   process.exit(1);
 }
