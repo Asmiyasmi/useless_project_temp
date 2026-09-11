@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAITLESS — Please wait. For absolutely nothing.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            serif: ['Cinzel', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 25px -5px rgba(251, 191, 36, 0.4); }
+      50% { box-shadow: 0 0 35px 2px rgba(251, 191, 36, 0.7); }
+    }
+    .glow-amber { animation: pulse-glow 3s infinite ease-in-out; }
+    @media print {
+      body * { visibility: hidden; }
+      #printable-certificate, #printable-certificate * { visibility: visible; }
+      #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; border: none; }
+    }
+  </style>
+</head>
+<body class="bg-white text-zinc-100 font-sans min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-black">
+
+  <!-- TOP NAVBAR -->
+  <header class="border-b border-zinc-800/80 bg-zinc-900/60 backdrop-blur sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="WaitlessApp.showScreen('screen-landing')">
+        <span class="text-2xl">&#x23F3;</span>
+        <div>
+          <h1 class="font-display font-extrabold text-lg tracking-tight text-white flex items-center">
+            WAITLESS <span class="ml-2 text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-zinc-800 text-amber-400 border border-amber-400/20">v1.0</span>
+          </h1>
+          <p class="text-[11px] text-zinc-400 hidden sm:block">&quot;Please wait. For absolutely nothing.&quot;</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <div id="connection-status" class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-800 text-emerald-400 flex items-center">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block mr-1.5"></span> LIVE QUEUE
+        </div>
+        <button id="sound-toggle-btn" onclick="WaitlessApp.toggleSound()" class="px-2.5 py-1 text-xs font-mono bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-zinc-300">
+          Sound ON
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col justify-center max-w-6xl w-full mx-auto p-4 sm:p-6 relative">
+    <!-- SCREEN 1: WAITLESS — LANDING PAGE -->
+    <section id="screen-landing" class="screen-container space-y-12 py-6">
+      <div class="text-center max-w-3xl mx-auto space-y-6">
+        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-mono uppercase tracking-wider">
+          <span>Guaranteed Zero Outcomes</span>
+        </div>
+        <h2 class="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+          Please wait.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-yellow-500">For absolutely nothing.</span>
+        </h2>
+        <p class="text-base sm:text-lg text-zinc-400 leading-relaxed">
+          Why wait for tickets, burgers, or downloads when you can experience the sublime, unadulterated state of waiting for nothing at all? Step into the world&#39;s only queue where disappointment is mathematically impossible.
+        </p>
+        <div class="pt-2">
+          <button onclick="WaitlessApp.startJoinQueue()" class="glow-amber px-8 py-4 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-display font-extrabold text-lg sm:text-xl rounded-2xl shadow-xl active:scale-95 transition-all">
+            JOIN THE QUEUE &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Stats Ribbon -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-center">
+          <div class="text-2xl sm:text-3xl font-mono font-black text-amber-400 live-waiter-count">1</div>
+          <div class="text-xs text-zinc-400 mt-1 uppercase font-mono tracking-wider">Active Waiters</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-center">
+          <div class="text-2xl sm:text-3xl font-mono font-black text-zinc-200 former-waiter-count">4</div>
+          <div class="text-xs text-zinc-400 mt-1 uppercase font-mono tracking-wider">Former Waiters</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-center">
+          <div class="text-2xl sm:text-3xl font-mono font-black text-emerald-400">0%</div>
+          <div class="text-xs text-zinc-400 mt-1 uppercase font-mono tracking-wider">Purpose Delivered</div>
+        </div>
+        <div class="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-center">
+          <div class="text-2xl sm:text-3xl font-mono font-black text-sky-400">&le; 120s</div>
+          <div class="text-xs text-zinc-400 mt-1 uppercase font-mono tracking-wider">Authoritative Max</div>
+        </div>
+      </div>
+
+      <!-- Former Waiters Live Ticker -->
+      <div class="max-w-4xl mx-auto p-3 rounded-xl bg-zinc-900/40 border border-zinc-800/60 overflow-hidden">
+        <div class="flex items-center space-x-3 overflow-x-auto" id="former-waiters-ticker"></div>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto pt-6">
+        <div class="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition">
+          <div class="text-3xl mb-3">&#x1F32A;&#xFE0F;</div>
+          <h3 class="font-display font-bold text-lg text-white mb-2">Queue Chaos Engine</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Positions shift backwards arbitrarily. We might promote someone who just arrived, or delay you for &quot;system adjustments&quot;.
+          </p>
+        </div>
+        <div class="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition">
+          <div class="text-3xl mb-3">&#x23F1;&#xFE0F;</div>
+          <h3 class="font-display font-bold text-lg text-white mb-2">Ornamental ETAs</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Our estimated wait times fluctuate randomly between 00:42 and 00:18. They have no correlation with physical time.
+          </p>
+        </div>
+        <div class="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition">
+          <div class="text-3xl mb-3">&#x1F4DC;</div>
+          <h3 class="font-display font-bold text-lg text-white mb-2">Verified Vacuity</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Reaching #1 unlocks an authentic, printable Certificate of Meaningless Waiting and a 0% achievement report.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: WAITLESS — JOIN QUEUE -->
+    <section id="screen-join" class="screen-container hidden max-w-lg mx-auto w-full py-8">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div class="text-center space-y-2">
+          <span class="text-3xl">&#x1F3AB;</span>
+          <h2 class="font-display text-2xl font-bold text-white">Join The Queue</h2>
+          <p class="text-xs text-zinc-400">Step 1: Surrender your precious time to the void.</p>
+        </div>
+        <form id="join-queue-form" class="space-y-5">
+          <div>
+            <label for="waiter-name-input" class="block text-xs font-mono text-zinc-400 uppercase tracking-wider mb-2">
+              Your Waiting Alias
+            </label>
+            <input type="text" id="waiter-name-input" maxlength="30" placeholder="e.g. Patient Voyager, Dr. Loiterer" class="w-full px-4 py-3 bg-zinc-950 border border-zinc-700 focus:border-amber-400 rounded-xl text-white font-medium outline-none transition" required />
+          </div>
+          <div class="space-y-3 pt-2 text-xs text-zinc-300">
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="checkbox" checked required class="mt-0.5 rounded bg-zinc-950 border-zinc-700 text-amber-500 focus:ring-amber-400" />
+              <span>I acknowledge and accept that I am waiting for absolutely nothing.</span>
+            </label>
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="checkbox" checked required class="mt-0.5 rounded bg-zinc-950 border-zinc-700 text-amber-500 focus:ring-amber-400" />
+              <span>I agree not to question queue movements, promotions, or random demotions.</span>
+            </label>
+            <label class="flex items-start space-x-3 cursor-pointer">
+              <input type="checkbox" checked required class="mt-0.5 rounded bg-zinc-950 border-zinc-700 text-amber-500 focus:ring-amber-400" />
+              <span>I understand that waiting time is server-authoritative and will never exceed 120 seconds.</span>
+            </label>
+          </div>
+          <div class="pt-4 space-y-3">
+            <button type="submit" class="w-full py-4 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-display font-bold text-base rounded-xl shadow-lg active:scale-98 transition">
+              ENTER QUEUE NOW &rarr;
+            </button>
+            <button type="button" onclick="WaitlessApp.showScreen('screen-landing')" class="w-full py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-mono text-xs rounded-xl transition">
+              Cancel & Return to Safety
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <!-- SCREEN 3: WAITLESS — WAITING DASHBOARD -->
+    <section id="screen-dashboard" class="screen-container hidden max-w-2xl mx-auto w-full space-y-6 py-4">
+      <div class="flex items-center justify-between p-3.5 bg-zinc-900/80 border border-zinc-800 rounded-2xl">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+          <span class="text-xs text-zinc-400">Waiting as:</span>
+          <span id="dashboard-user-name" class="text-xs font-bold text-white">Anonymous</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button onclick="WaitlessApp.openPersonalityModal()" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-xs font-mono text-amber-300 flex items-center">
+            🎭 <span id="dashboard-personality-tag" class="ml-1">The Patient One</span>
+          </button>
+          <button onclick="WaitlessApp.openExitModal()" class="px-2.5 py-1 bg-red-950/50 hover:bg-red-900/60 border border-red-800/80 rounded-lg text-xs font-mono text-red-300">
+            Exit Waiting
+          </button>
+        </div>
+      </div>
+
+      <div id="chaos-toast" class="hidden p-4 rounded-2xl bg-amber-500/15 border-2 border-amber-400/80 shadow-lg text-center space-y-1 transition-all">
+        <div class="flex items-center justify-center space-x-2 text-amber-300 font-display font-bold text-sm">
+          <span>⚠️ QUEUE CHAOS EVENT</span>
+          <span id="chaos-pos-shift" class="font-mono text-xs px-2 py-0.5 rounded bg-amber-400/20"></span>
+        </div>
+        <div id="chaos-reason" class="text-xs font-medium text-white italic">&quot;Administrative issue detected.&quot;</div>
+      </div>
+
+      <!-- Queue position + metrics card -->
+      <div id="dashboard-main-view">
+        <div class="bg-zinc-900/90 border border-zinc-800 rounded-3xl p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
+          <div class="space-y-1">
+            <div class="text-xs font-mono uppercase tracking-widest text-zinc-400">Current Queue Position</div>
+            <div id="dashboard-pos-num" class="font-mono text-7xl sm:text-8xl font-black text-amber-400 tracking-tight py-2">
+              #--
+            </div>
+          </div>
+          <div class="flex items-center justify-center space-x-2 py-1">
+            <span class="w-3 h-3 rounded-full bg-zinc-700"></span>
+            <span class="w-3 h-3 rounded-full bg-zinc-600"></span>
+            <span class="w-4 h-4 rounded-full bg-amber-400 ring-4 ring-amber-400/20"></span>
+            <span class="w-3 h-3 rounded-full bg-zinc-600"></span>
+            <span class="w-3 h-3 rounded-full bg-zinc-700"></span>
+          </div>
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl">
+              <div class="text-[10px] font-mono text-zinc-500 uppercase">Fake Estimated Wait</div>
+              <div id="dashboard-fake-eta" class="text-xl font-mono font-bold text-zinc-200">00:42</div>
+              <div class="text-[9px] text-zinc-500 italic mt-0.5">(Purely ornamental)</div>
+            </div>
+            <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl">
+              <div class="text-[10px] font-mono text-zinc-500 uppercase">Server Countdown</div>
+              <div class="text-xl font-mono font-bold text-emerald-400">ACTIVE</div>
+              <div class="text-[9px] text-zinc-500 italic mt-0.5">Authoritative (&le; 120s)</div>
+            </div>
+          </div>
+          <div class="space-y-2 pt-2 text-left">
+            <div class="flex justify-between text-xs">
+              <span class="text-zinc-400 font-mono">Patience Level</span>
+              <span id="dashboard-patience-pct" class="font-mono font-bold text-amber-400">100%</span>
+            </div>
+            <div class="w-full bg-zinc-800 h-3 rounded-full overflow-hidden border border-zinc-700">
+              <div id="dashboard-patience-bar" class="bg-gradient-to-r from-emerald-400 via-amber-400 to-red-500 h-full transition-all duration-500" style="width: 100%"></div>
+            </div>
+            <div id="dashboard-patience-label" class="text-[11px] text-zinc-400 italic text-right">
+              Completely fine.
+            </div>
+          </div>
+        </div>
+
+        <!-- Announcement bar -->
+        <div class="mt-4 p-3.5 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center space-x-3 text-xs text-zinc-300">
+          <span class="text-base">📢</span>
+          <span class="font-bold text-zinc-400 uppercase font-mono text-[10px]">Broadcast:</span>
+          <span id="announcement-text" class="flex-1 truncate font-medium">Please continue waiting. Waiting is proceeding normally.</span>
+        </div>
+
+        <!-- Live Queue Roster -->
+        <div class="mt-4 bg-zinc-900/80 border border-zinc-800 rounded-2xl overflow-hidden">
+          <div class="px-4 py-3 border-b border-zinc-800 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs font-mono uppercase tracking-wider text-zinc-400">Live Queue</span>
+            </div>
+            <span id="queue-roster-count" class="text-xs font-mono text-amber-400">0 waiting</span>
+          </div>
+          <div id="queue-roster-list" class="divide-y divide-zinc-800/60 max-h-44 overflow-y-auto">
+            <div class="px-4 py-3 text-xs text-zinc-500 italic text-center">No one else in queue yet.</div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="mt-4 grid grid-cols-2 gap-4">
+          <button onclick="WaitlessApp.openWhyWaitingModal()" class="p-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-2xl flex flex-col items-center text-center space-y-1 transition group">
+            <span class="text-2xl group-hover:scale-110 transition-transform">❓</span>
+            <span class="font-display font-bold text-sm text-zinc-200">Why Am I Waiting?</span>
+            <span class="text-[11px] text-zinc-400">Ask the infallible server</span>
+          </button>
+          <button onclick="WaitlessApp.openActivitiesPanel()" class="p-4 bg-zinc-900 hover:bg-zinc-800 border border-amber-400/40 hover:border-amber-400 rounded-2xl flex flex-col items-center text-center space-y-1 transition group">
+            <span class="text-2xl group-hover:scale-110 transition-transform">🎮</span>
+            <span class="font-display font-bold text-sm text-amber-300">17 Activities</span>
+            <span class="text-[11px] text-zinc-400">Waste time while waiting</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ACTIVITIES PANEL (inline, replaces queue view) -->
+      <div id="dashboard-activities-panel" class="hidden space-y-4">
+        <!-- Status bar stays visible above -->
+        <div class="p-3 bg-zinc-900/80 border border-zinc-800 rounded-2xl flex items-center justify-between text-xs">
+          <div class="flex items-center space-x-3">
+            <span class="font-mono text-zinc-400">Position:</span>
+            <span id="activity-pos-display" class="font-mono font-bold text-amber-400">#--</span>
+            <span class="font-mono text-zinc-400">Patience:</span>
+            <span id="activity-patience-display" class="font-mono font-bold text-emerald-400">100%</span>
+          </div>
+          <button onclick="WaitlessApp.closeActivitiesPanel()" class="px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-display font-bold text-xs rounded-lg">
+            ← BACK TO QUEUE
+          </button>
+        </div>
+
+        <!-- Activity selector grid -->
+        <div id="activity-selector" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-white text-sm">Useless Activities</h3>
+            <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">Select any activity</span>
+          </div>
+          <div id="activity-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+
+        <!-- Active activity view -->
+        <div id="activity-view" class="hidden bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+          <div class="px-4 py-3 border-b border-zinc-800 flex items-center justify-between">
+            <span id="activity-view-title" class="font-display font-bold text-sm text-white"></span>
+            <button onclick="WaitlessApp.backToActivityGrid()" class="text-xs font-mono text-amber-400 hover:underline">
+              ← Activities
+            </button>
+          </div>
+          <div id="activity-content" class="p-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: MODALS -->
+    <div id="modal-personality" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl">
+        <div class="text-4xl">🎭</div>
+        <h3 class="font-display text-2xl font-bold text-white">Your Waiting Personality</h3>
+        <div id="modal-pers-title" class="text-lg font-mono font-bold text-amber-400">The Patient One</div>
+        <p id="modal-pers-desc" class="text-sm text-zinc-300 leading-relaxed">
+          Breathes deeply. Convinced waiting builds spiritual resilience.
+        </p>
+        <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-zinc-400 text-left space-y-1">
+          <div>• <b>Tolerance:</b> Infinite</div>
+          <div>• <b>Expectation of Reward:</b> 0%</div>
+          <div>• <b>Queue Loyalty:</b> Unbreakable</div>
+        </div>
+        <button onclick="WaitlessApp.closePersonalityModal()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl text-sm transition">
+          Return to Queue
+        </button>
+      </div>
+    </div>
+
+    <div id="modal-exit" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-zinc-900 border border-red-900/50 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl">
+        <div class="text-4xl">🚪</div>
+        <h3 class="font-display text-2xl font-bold text-white">Abandon the Queue?</h3>
+        <p class="text-sm text-zinc-300 leading-relaxed">
+          If you exit now, your session will end immediately. You will be permanently catalogued as a <b>Former Waiter</b> who gave up waiting for nothing.
+        </p>
+        <div class="p-3 bg-red-950/30 border border-red-900/50 rounded-xl text-xs text-red-300">
+          ⚠️ Warning: You will miss absolutely nothing.
+        </div>
+        <div class="space-y-3 pt-2">
+          <button onclick="WaitlessApp.closeExitModal()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl text-sm transition">
+            Stay and Keep Waiting (Recommended)
+          </button>
+          <button onclick="WaitlessApp.confirmExit()" class="w-full py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl text-xs transition">
+            Yes, Give Up & Exit
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-why-waiting" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl">
+        <div class="text-4xl">❓</div>
+        <h3 class="font-display text-xl font-bold text-white">Why Am I Waiting?</h3>
+        <div id="why-waiting-answer" class="text-lg font-display font-extrabold text-amber-400 italic py-2">
+          &quot;Because you joined.&quot;
+        </div>
+        <p class="text-xs text-zinc-400">
+          The server has spoken. Please do not question the fundamental principles of the queue.
+        </p>
+        <button onclick="WaitlessApp.closeWhyWaitingModal()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl text-sm transition">
+          I Understand
+        </button>
+      </div>
+    </div>
+
+
+
+    <!-- SCREEN 5: FORMER WAITER SCREEN -->
+    <section id="screen-former-waiter" class="screen-container hidden max-w-xl mx-auto w-full space-y-6 py-6">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 text-center space-y-6 shadow-2xl">
+        <div class="text-5xl">🛑</div>
+        <div>
+          <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-400 text-xs font-mono uppercase">Status: Former Waiter</span>
+          <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mt-3">You Left The Queue</h2>
+          <p class="text-xs text-zinc-400 mt-1">Your lack of patience has been formally recorded.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-3 p-4 bg-zinc-950 rounded-2xl border border-zinc-800 text-left text-xs">
+          <div>
+            <span class="text-zinc-500 font-mono">Waiter:</span>
+            <div id="fw-name" class="font-bold text-zinc-200 mt-0.5">--</div>
+          </div>
+          <div>
+            <span class="text-zinc-500 font-mono">Time Waited:</span>
+            <div id="fw-duration" class="font-mono font-bold text-amber-400 mt-0.5">-- seconds</div>
+          </div>
+          <div>
+            <span class="text-zinc-500 font-mono">Last Position:</span>
+            <div id="fw-pos" class="font-mono font-bold text-zinc-200 mt-0.5">#--</div>
+          </div>
+          <div>
+            <span class="text-zinc-500 font-mono">Personality:</span>
+            <div id="fw-personality" class="font-bold text-zinc-200 mt-0.5">--</div>
+          </div>
+          <div class="col-span-2">
+            <span class="text-zinc-500 font-mono">Patience at Exit:</span>
+            <div id="fw-patience" class="font-mono font-bold text-zinc-200 mt-0.5">--%</div>
+          </div>
+        </div>
+        <div class="space-y-3 text-left">
+          <h4 class="font-mono text-xs text-zinc-400 uppercase tracking-wider">Wall of Former Waiters</h4>
+          <div class="overflow-x-auto max-h-48 rounded-xl border border-zinc-800 bg-zinc-950 p-2">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-zinc-800 text-[10px] font-mono text-zinc-500">
+                  <th class="pb-1.5">Name</th>
+                  <th class="pb-1.5">Waited</th>
+                  <th class="pb-1.5">Position</th>
+                  <th class="pb-1.5">Personality</th>
+                </tr>
+              </thead>
+              <tbody id="former-waiters-archive"></tbody>
+            </table>
+          </div>
+        </div>
+        <button onclick="WaitlessApp.waitAgain()" class="w-full py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl text-sm transition">
+          Return to Landing Page
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 6: FINAL REVEAL & COMPLETION -->
+    <section id="screen-completion" class="screen-container hidden max-w-xl mx-auto w-full space-y-8 py-8 text-center relative">
+      <div id="confetti-container" class="pointer-events-none absolute inset-0 overflow-hidden"></div>
+      <div class="bg-zinc-900 border border-amber-400/40 rounded-3xl p-8 sm:p-10 shadow-2xl space-y-6 relative z-10">
+        <div class="space-y-3">
+          <div class="text-5xl animate-bounce">🎉</div>
+          <h2 class="font-display text-3xl sm:text-4xl font-black text-amber-400 tracking-tight">
+            IT'S YOUR TURN!
+          </h2>
+          <div class="inline-block px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-700 text-emerald-400 font-mono text-xs font-bold">
+            YOU REACHED POSITION #1
+          </div>
+        </div>
+        <div class="py-4 space-y-3 border-y border-zinc-800">
+          <div class="text-3xl font-display font-extrabold text-white">
+            &quot;There is nothing here.&quot;
+          </div>
+          <p class="text-sm text-zinc-400 leading-relaxed">
+            Dear <span id="completion-user" class="font-bold text-zinc-200">Waiter</span>, you climbed the ranks. You endured the chaos. You arrived at the front of the queue, only to discover what we promised from the very beginning: absolutely nothing.
+          </p>
+        </div>
+        <div class="pt-2">
+          <button onclick="WaitlessApp.showReportAndCertificate()" class="glow-amber w-full py-4 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-display font-extrabold text-base rounded-2xl shadow-xl active:scale-95 transition">
+            VIEW WAITING REPORT &amp; CERTIFICATE &rarr;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 7: WAITING REPORT & CERTIFICATE -->
+    <section id="screen-report" class="screen-container hidden max-w-3xl mx-auto w-full space-y-8 py-6">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-zinc-800 pb-4">
+          <div>
+            <h3 class="font-display text-2xl font-bold text-white">Official Waiting Report</h3>
+            <p class="text-xs text-zinc-400">Detailed metric audit of zero achievement</p>
+          </div>
+          <div class="text-right font-mono text-xs">
+            <span class="text-zinc-500">Session ID:</span>
+            <div id="rep-session-id" class="text-amber-400 font-bold">sess_--</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 flex justify-between">
+            <span class="text-zinc-400">Name:</span>
+            <span id="rep-name" class="font-bold text-zinc-200">--</span>
+          </div>
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 flex justify-between">
+            <span class="text-zinc-400">Actual Waiting Time:</span>
+            <span id="rep-time" class="font-mono font-bold text-amber-400">-- seconds</span>
+          </div>
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 flex justify-between">
+            <span class="text-zinc-400">Final Position:</span>
+            <span id="rep-final-pos" class="font-mono font-bold text-emerald-400">#1</span>
+          </div>
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 flex justify-between">
+            <span class="text-zinc-400">Queue Chaos Events:</span>
+            <span id="rep-chaos" class="font-mono font-bold text-zinc-200">-- events</span>
+          </div>
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 flex justify-between">
+            <span class="text-zinc-400">Announcements Heard:</span>
+            <span id="rep-announcements" class="font-mono font-bold text-zinc-200">-- broadcasts</span>
+          </div>
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 flex justify-between">
+            <span class="text-zinc-400">Activities / Games:</span>
+            <span id="rep-activities" class="font-mono font-bold text-zinc-200">-- played</span>
+          </div>
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 flex justify-between">
+            <span class="text-zinc-400">Final Patience:</span>
+            <span id="rep-patience" class="font-mono font-bold text-zinc-200">--%</span>
+          </div>
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 flex justify-between">
+            <span class="text-zinc-400">Personality Type:</span>
+            <span id="rep-personality" class="font-bold text-amber-300">--</span>
+          </div>
+          <div class="p-3.5 bg-zinc-950 rounded-xl border border-zinc-800 col-span-1 sm:col-span-2">
+            <div class="text-zinc-400 mb-1">Positions Experienced:</div>
+            <div id="rep-positions" class="font-mono text-zinc-300 text-xs">--</div>
+          </div>
+          <div class="p-4 bg-amber-400/10 border border-amber-400/40 rounded-xl col-span-1 sm:col-span-2 flex items-center justify-between">
+            <span class="font-display font-bold text-sm text-white">PURPOSE ACCOMPLISHED:</span>
+            <span id="rep-purpose" class="text-2xl font-mono font-black text-amber-400">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Printable Certificate -->
+      <div id="printable-certificate" class="bg-zinc-900 border-4 border-amber-500/80 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-2 border-2 border-amber-500/30 rounded-2xl pointer-events-none"></div>
+        <div class="space-y-1">
+          <div class="text-xs font-serif uppercase tracking-[0.3em] text-amber-400">Official Accolade</div>
+          <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide">
+            CERTIFICATE OF MEANINGLESS WAITING
+          </h2>
+          <p class="text-[11px] text-zinc-400 italic">Issued by the Supreme Bureau of Empty Queues</p>
+        </div>
+        <div class="py-4 space-y-3">
+          <p class="text-xs text-zinc-400 uppercase tracking-widest">This certifies that</p>
+          <div id="cert-name" class="font-display text-3xl font-black text-amber-300 underline decoration-amber-500/50 underline-offset-8">
+            Waiter Name
+          </div>
+          <p class="text-xs text-zinc-300 max-w-lg mx-auto leading-relaxed pt-2">
+            has demonstrated extraordinary fortitude by actively waiting for <span id="cert-duration" class="font-bold text-amber-400 font-mono">0 SECONDS</span> in the pursuit of absolutely nothing, while embodying the persona of <span id="cert-personality" class="font-bold text-zinc-100">The Patient One</span>.
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-2 pt-4 border-t border-zinc-800 text-[10px] font-mono text-zinc-400">
+          <div>
+            <div class="text-zinc-600">VERIFIED DATE</div>
+            <div id="cert-date" class="text-zinc-300 mt-0.5">--</div>
+          </div>
+          <div>
+            <div class="text-zinc-600">OFFICIAL SEAL</div>
+            <div class="text-amber-400 font-bold mt-0.5">★ 0% OUTCOME ★</div>
+          </div>
+          <div>
+            <div class="text-zinc-600">SERIAL NUMBER</div>
+            <div id="cert-id" class="text-zinc-300 mt-0.5">CERT-0000</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+        <button onclick="WaitlessApp.printCertificate()" class="w-full sm:w-auto px-6 py-3 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-xs font-mono text-zinc-200 flex items-center justify-center">
+          Print / Save Certificate
+        </button>
+        <!-- PRD Section 25: WAIT AGAIN must return to Landing Page without creating an instant session -->
+        <button onclick="WaitlessApp.waitAgain()" class="w-full sm:w-auto px-8 py-4 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-display font-extrabold text-base rounded-2xl shadow-xl active:scale-95 transition">
+          WAIT AGAIN ↺
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-800/60 py-6 text-center text-xs text-zinc-500 font-mono">
+    <div class="max-w-6xl mx-auto px-4">
+      WAITLESS © 2026 — Built for the Useless Projects Hackathon. Purpose accomplished: 0%.
+    </div>
+  </footer>
+
+  <script src="activities.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

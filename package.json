@@ -1,0 +1,15 @@
+﻿{
+  "name": "waitless",
+  "version": "1.0.0",
+  "description": "WAITLESS - Please wait. For absolutely nothing.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node tests/test_system.js && node tests/test_websocket_e2e.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  }
+}
