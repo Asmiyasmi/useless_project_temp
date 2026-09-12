@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,12 +34,20 @@
       #printable-certificate, #printable-certificate * { visibility: visible; }
       #printable-certificate { position: absolute; left: 0; top: 0; width: 100%; border: none; }
     }
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
-<body class="bg-white dark:bg-zinc-950 text-zinc-100 font-sans min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-black">
+<body class="bg-white text-zinc-900 font-sans min-h-screen flex flex-col antialiased selection:bg-amber-400 selection:text-black" style="background-color: #ffffff;">
 
   <!-- TOP NAVBAR -->
-  <header class="border-b border-zinc-800/80 bg-zinc-900/60 backdrop-blur sticky top-0 z-40">
+  <header class="border-b border-zinc-800/80 bg-zinc-900/95 backdrop-blur sticky top-0 z-40">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3 cursor-pointer" onclick="WaitlessApp.showScreen('screen-landing')">
         <span class="text-2xl">&#x23F3;</span>
@@ -51,10 +59,10 @@
         </div>
       </div>
       <div class="flex items-center space-x-3">
-        <div id="connection-status" class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-800 text-emerald-400 flex items-center">
+        <div id="connection-status" class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-800 text-emerald-400 flex items-center select-none">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block mr-1.5"></span> LIVE QUEUE
         </div>
-        <button id="sound-toggle-btn" onclick="WaitlessApp.toggleSound()" class="px-2.5 py-1 text-xs font-mono bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-zinc-300">
+        <button id="sound-toggle-btn" onclick="WaitlessApp.toggleSound()" class="px-2.5 py-1 text-xs font-mono bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-zinc-300 transition">
           Sound ON
         </button>
       </div>
@@ -65,13 +73,13 @@
     <!-- SCREEN 1: WAITLESS — LANDING PAGE -->
     <section id="screen-landing" class="screen-container space-y-12 py-6">
       <div class="text-center max-w-3xl mx-auto space-y-6">
-        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-mono uppercase tracking-wider">
+        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-amber-400/10 border border-amber-500/30 text-amber-600 text-xs font-mono uppercase tracking-wider select-none">
           <span>Guaranteed Zero Outcomes</span>
         </div>
-        <h2 class="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
-          Please wait.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-yellow-500">For absolutely nothing.</span>
+        <h2 class="font-display text-4xl sm:text-6xl font-extrabold tracking-tight text-zinc-950 leading-tight">
+          Please wait.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600">For absolutely nothing.</span>
         </h2>
-        <p class="text-base sm:text-lg text-zinc-400 leading-relaxed">
+        <p class="text-base sm:text-lg text-zinc-600 leading-relaxed">
           Why wait for tickets, burgers, or downloads when you can experience the sublime, unadulterated state of waiting for nothing at all? Step into the world&#39;s only queue where disappointment is mathematically impossible.
         </p>
         <div class="pt-2">
@@ -83,46 +91,46 @@
 
       <!-- Live Stats Ribbon -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
-        <div class="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-center">
-          <div class="text-2xl sm:text-3xl font-mono font-black text-amber-400 live-waiter-count">1</div>
+        <div class="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-center shadow-md">
+          <div class="text-2xl sm:text-3xl font-mono font-black text-amber-400 live-waiter-count">14</div>
           <div class="text-xs text-zinc-400 mt-1 uppercase font-mono tracking-wider">Active Waiters</div>
         </div>
-        <div class="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-center">
+        <div class="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-center shadow-md">
           <div class="text-2xl sm:text-3xl font-mono font-black text-zinc-200 former-waiter-count">4</div>
           <div class="text-xs text-zinc-400 mt-1 uppercase font-mono tracking-wider">Former Waiters</div>
         </div>
-        <div class="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-center">
+        <div class="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-center shadow-md">
           <div class="text-2xl sm:text-3xl font-mono font-black text-emerald-400">0%</div>
           <div class="text-xs text-zinc-400 mt-1 uppercase font-mono tracking-wider">Purpose Delivered</div>
         </div>
-        <div class="p-4 rounded-2xl bg-zinc-900/80 border border-zinc-800 text-center">
+        <div class="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-center shadow-md">
           <div class="text-2xl sm:text-3xl font-mono font-black text-sky-400">&le; 120s</div>
           <div class="text-xs text-zinc-400 mt-1 uppercase font-mono tracking-wider">Authoritative Max</div>
         </div>
       </div>
 
       <!-- Former Waiters Live Ticker -->
-      <div class="max-w-4xl mx-auto p-3 rounded-xl bg-zinc-900/40 border border-zinc-800/60 overflow-hidden">
+      <div class="max-w-4xl mx-auto p-3 rounded-xl bg-zinc-900 border border-zinc-800 shadow-md overflow-hidden">
         <div class="flex items-center space-x-3 overflow-x-auto" id="former-waiters-ticker"></div>
       </div>
 
       <!-- Features Grid -->
-      <div class="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto pt-6">
-        <div class="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition">
+      <div class="grid sm:grid-cols-3 gap-6 max-w-4xl mx-auto pt-4">
+        <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition shadow-md">
           <div class="text-3xl mb-3">&#x1F32A;&#xFE0F;</div>
           <h3 class="font-display font-bold text-lg text-white mb-2">Queue Chaos Engine</h3>
           <p class="text-xs text-zinc-400 leading-relaxed">
             Positions shift backwards arbitrarily. We might promote someone who just arrived, or delay you for &quot;system adjustments&quot;.
           </p>
         </div>
-        <div class="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition">
+        <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition shadow-md">
           <div class="text-3xl mb-3">&#x23F1;&#xFE0F;</div>
           <h3 class="font-display font-bold text-lg text-white mb-2">Ornamental ETAs</h3>
           <p class="text-xs text-zinc-400 leading-relaxed">
             Our estimated wait times fluctuate randomly between 00:42 and 00:18. They have no correlation with physical time.
           </p>
         </div>
-        <div class="p-6 rounded-2xl bg-zinc-900/50 border border-zinc-800 hover:border-zinc-700 transition">
+        <div class="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition shadow-md">
           <div class="text-3xl mb-3">&#x1F4DC;</div>
           <h3 class="font-display font-bold text-lg text-white mb-2">Verified Vacuity</h3>
           <p class="text-xs text-zinc-400 leading-relaxed">
@@ -172,19 +180,20 @@
         </form>
       </div>
     </section>
+
     <!-- SCREEN 3: WAITLESS — WAITING DASHBOARD -->
     <section id="screen-dashboard" class="screen-container hidden max-w-2xl mx-auto w-full space-y-6 py-4">
-      <div class="flex items-center justify-between p-3.5 bg-zinc-900/80 border border-zinc-800 rounded-2xl">
+      <div class="flex items-center justify-between p-3.5 bg-zinc-900/90 border border-zinc-800 rounded-2xl shadow-sm">
         <div class="flex items-center space-x-2">
           <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
           <span class="text-xs text-zinc-400">Waiting as:</span>
           <span id="dashboard-user-name" class="text-xs font-bold text-white">Anonymous</span>
         </div>
         <div class="flex items-center space-x-2">
-          <button onclick="WaitlessApp.openPersonalityModal()" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-xs font-mono text-amber-300 flex items-center">
+          <button onclick="WaitlessApp.openPersonalityModal()" class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-xs font-mono text-amber-300 flex items-center transition">
             🎭 <span id="dashboard-personality-tag" class="ml-1">The Patient One</span>
           </button>
-          <button onclick="WaitlessApp.openExitModal()" class="px-2.5 py-1 bg-red-950/50 hover:bg-red-900/60 border border-red-800/80 rounded-lg text-xs font-mono text-red-300">
+          <button onclick="WaitlessApp.openExitModal()" class="px-2.5 py-1 bg-red-950/50 hover:bg-red-900/60 border border-red-800/80 rounded-lg text-xs font-mono text-red-300 transition">
             Exit Waiting
           </button>
         </div>
@@ -200,32 +209,85 @@
 
       <!-- Queue position + metrics card -->
       <div id="dashboard-main-view">
-        <div class="bg-zinc-900/90 border border-zinc-800 rounded-3xl p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
-          <div class="space-y-1">
-            <div class="text-xs font-mono uppercase tracking-widest text-zinc-400">Current Queue Position</div>
-            <div id="dashboard-pos-num" class="font-mono text-7xl sm:text-8xl font-black text-amber-400 tracking-tight py-2">
-              #--
+        <div class="bg-zinc-900/95 border border-zinc-800 rounded-3xl p-6 sm:p-8 text-center space-y-5 shadow-2xl relative overflow-hidden">
+          
+          <!-- ITEM 1: WAITING ROOM ABSTRACT QUEUE VISUAL -->
+          <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3 mb-2 select-none">
+            <div class="flex items-center space-x-2">
+              <span class="w-1.5 h-3.5 bg-amber-400 rounded-full inline-block"></span>
+              <span class="text-[11px] font-mono tracking-[0.18em] uppercase text-zinc-400 font-semibold">Bureau of Void &bull; Holding Area</span>
+            </div>
+            <!-- Minimal abstract connected-node queue visualization -->
+            <div class="flex items-center space-x-1.5 opacity-80" title="Active holding matrix">
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
+              <span class="w-2.5 h-px bg-zinc-700"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
+              <span class="w-2.5 h-px bg-zinc-700"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span>
+              <span class="w-2.5 h-px bg-zinc-600"></span>
+              <span class="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.9)] animate-pulse"></span>
+              <span class="w-2.5 h-px bg-amber-400/40"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-500"></span>
+              <span class="w-2.5 h-px bg-zinc-700"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-600"></span>
             </div>
           </div>
-          <div class="flex items-center justify-center space-x-2 py-1">
+
+          <!-- ITEM 2: QUEUE POSITION WITH CONCENTRIC RETICLE / RING -->
+          <div class="space-y-1">
+            <div class="text-xs font-mono uppercase tracking-widest text-zinc-400">Current Queue Position</div>
+            <div class="relative inline-flex items-center justify-center my-2 select-none">
+              <!-- Subtle concentric ring visual effect -->
+              <div class="absolute -inset-3 sm:-inset-4 rounded-full border border-zinc-800 border-dashed pointer-events-none opacity-60"></div>
+              <div class="absolute -inset-1 sm:-inset-1.5 rounded-full border border-amber-400/30 pointer-events-none"></div>
+              <div id="dashboard-pos-num" class="font-mono text-7xl sm:text-8xl font-black text-amber-400 tracking-tight py-2 px-6 relative z-10">
+                #--
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center space-x-2 py-1 select-none">
             <span class="w-3 h-3 rounded-full bg-zinc-700"></span>
             <span class="w-3 h-3 rounded-full bg-zinc-600"></span>
             <span class="w-4 h-4 rounded-full bg-amber-400 ring-4 ring-amber-400/20"></span>
             <span class="w-3 h-3 rounded-full bg-zinc-600"></span>
             <span class="w-3 h-3 rounded-full bg-zinc-700"></span>
           </div>
+
+          <!-- ITEM 4: WAITING ANIMATIONS IN METRICS CARD -->
           <div class="grid grid-cols-2 gap-3 pt-2">
-            <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl">
-              <div class="text-[10px] font-mono text-zinc-500 uppercase">Fake Estimated Wait</div>
-              <div id="dashboard-fake-eta" class="text-xl font-mono font-bold text-zinc-200">00:42</div>
-              <div class="text-[9px] text-zinc-500 italic mt-0.5">(Purely ornamental)</div>
+            <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl relative overflow-hidden">
+              <div class="flex items-center justify-between">
+                <div class="text-[10px] font-mono text-zinc-500 uppercase">Fake Estimated Wait</div>
+                <!-- Subtle rotating geometric indicator -->
+                <svg class="w-3.5 h-3.5 text-amber-400/60 animate-[spin_8s_linear_infinite]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="9" stroke-dasharray="32 16"></circle>
+                </svg>
+              </div>
+              <div id="dashboard-fake-eta" class="text-xl font-mono font-bold text-zinc-200 mt-0.5">00:42</div>
+              <div class="text-[9px] text-zinc-500 italic mt-0.5 flex items-center space-x-1.5">
+                <span>(Purely ornamental)</span>
+                <span class="inline-flex space-x-0.5">
+                  <span class="w-1 h-1 rounded-full bg-zinc-600 animate-pulse"></span>
+                  <span class="w-1 h-1 rounded-full bg-zinc-600 animate-pulse [animation-delay:200ms]"></span>
+                  <span class="w-1 h-1 rounded-full bg-zinc-600 animate-pulse [animation-delay:400ms]"></span>
+                </span>
+              </div>
             </div>
-            <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl">
-              <div class="text-[10px] font-mono text-zinc-500 uppercase">Server Countdown</div>
-              <div class="text-xl font-mono font-bold text-emerald-400">ACTIVE</div>
+            <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl relative overflow-hidden">
+              <div class="flex items-center justify-between">
+                <div class="text-[10px] font-mono text-zinc-500 uppercase">Server Countdown</div>
+                <!-- Subtle steady pulsing dot -->
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                </span>
+              </div>
+              <div class="text-xl font-mono font-bold text-emerald-400 mt-0.5">ACTIVE</div>
               <div class="text-[9px] text-zinc-500 italic mt-0.5">Authoritative (&le; 120s)</div>
             </div>
           </div>
+
           <div class="space-y-2 pt-2 text-left">
             <div class="flex justify-between text-xs">
               <span class="text-zinc-400 font-mono">Patience Level</span>
@@ -240,19 +302,38 @@
           </div>
         </div>
 
-        <!-- Announcement bar -->
-        <div class="mt-4 p-3.5 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center space-x-3 text-xs text-zinc-300">
-          <span class="text-base">📢</span>
-          <span class="font-bold text-zinc-400 uppercase font-mono text-[10px]">Broadcast:</span>
-          <span id="announcement-text" class="flex-1 truncate font-medium">Please continue waiting. Waiting is proceeding normally.</span>
+        <!-- ITEM 5: ANNOUNCEMENT PANEL (BUREAUCRATIC OFFICIAL DISPATCH) -->
+        <div class="mt-4 p-3.5 bg-zinc-900/95 border border-zinc-800 rounded-xl flex items-center space-x-3 text-xs text-zinc-300 relative overflow-hidden shadow-sm">
+          <!-- Subtle official left accent strip -->
+          <div class="absolute left-0 top-0 bottom-0 w-1 bg-amber-400"></div>
+          <!-- Bureaucratic badge -->
+          <div class="flex items-center space-x-1.5 pl-1.5 pr-2 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-[10px] font-mono text-zinc-400 shrink-0 select-none">
+            <svg class="w-3 h-3 text-amber-400 animate-[pulse_3s_ease-in-out_infinite]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+            </svg>
+            <span class="font-semibold text-zinc-300 tracking-wider">OFFICIAL DISPATCH:</span>
+          </div>
+          <span id="announcement-text" class="flex-1 truncate font-mono text-[11px] text-zinc-300">Please continue waiting. Waiting is proceeding normally.</span>
+          <!-- Transmission indicator -->
+          <div class="hidden sm:flex items-center space-x-0.5 text-zinc-600 text-[9px] font-mono shrink-0 select-none">
+            <span class="w-1 h-2 bg-amber-400/60 rounded-xs animate-pulse"></span>
+            <span class="w-1 h-3 bg-amber-400/80 rounded-xs animate-pulse [animation-delay:150ms]"></span>
+            <span class="w-1 h-2 bg-amber-400/40 rounded-xs animate-pulse [animation-delay:300ms]"></span>
+          </div>
         </div>
 
-        <!-- Live Queue Roster -->
-        <div class="mt-4 bg-zinc-900/80 border border-zinc-800 rounded-2xl overflow-hidden">
+        <!-- ITEM 3: LIVE QUEUE ROSTER WITH ANIMATED 'LIVE' BADGE -->
+        <div class="mt-4 bg-zinc-900/90 border border-zinc-800 rounded-2xl overflow-hidden shadow-sm">
           <div class="px-4 py-3 border-b border-zinc-800 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span class="text-xs font-mono uppercase tracking-wider text-zinc-400">Live Queue</span>
+            <div class="flex items-center space-x-2.5 select-none">
+              <div class="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-800/80">
+                <span class="relative flex h-1.5 w-1.5">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
+                </span>
+                <span class="text-[9px] font-mono font-bold text-emerald-400 tracking-wider uppercase">LIVE</span>
+              </div>
+              <span class="text-xs font-mono uppercase tracking-wider text-zinc-400">Active Roster</span>
             </div>
             <span id="queue-roster-count" class="text-xs font-mono text-amber-400">0 waiting</span>
           </div>
@@ -279,14 +360,14 @@
       <!-- ACTIVITIES PANEL (inline, replaces queue view) -->
       <div id="dashboard-activities-panel" class="hidden space-y-4">
         <!-- Status bar stays visible above -->
-        <div class="p-3 bg-zinc-900/80 border border-zinc-800 rounded-2xl flex items-center justify-between text-xs">
+        <div class="p-3 bg-zinc-900/90 border border-zinc-800 rounded-2xl flex items-center justify-between text-xs shadow-sm">
           <div class="flex items-center space-x-3">
             <span class="font-mono text-zinc-400">Position:</span>
             <span id="activity-pos-display" class="font-mono font-bold text-amber-400">#--</span>
             <span class="font-mono text-zinc-400">Patience:</span>
             <span id="activity-patience-display" class="font-mono font-bold text-emerald-400">100%</span>
           </div>
-          <button onclick="WaitlessApp.closeActivitiesPanel()" class="px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-display font-bold text-xs rounded-lg">
+          <button onclick="WaitlessApp.closeActivitiesPanel()" class="px-3 py-1.5 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-display font-bold text-xs rounded-lg transition">
             ← BACK TO QUEUE
           </button>
         </div>
@@ -301,7 +382,7 @@
         </div>
 
         <!-- Active activity view -->
-        <div id="activity-view" class="hidden bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
+        <div id="activity-view" class="hidden bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-sm">
           <div class="px-4 py-3 border-b border-zinc-800 flex items-center justify-between">
             <span id="activity-view-title" class="font-display font-bold text-sm text-white"></span>
             <button onclick="WaitlessApp.backToActivityGrid()" class="text-xs font-mono text-amber-400 hover:underline">
@@ -318,37 +399,31 @@
       <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl">
         <div class="text-4xl">🎭</div>
         <h3 class="font-display text-2xl font-bold text-white">Your Waiting Personality</h3>
-        <div id="modal-pers-title" class="text-lg font-mono font-bold text-amber-400">The Patient One</div>
-        <p id="modal-pers-desc" class="text-sm text-zinc-300 leading-relaxed">
+        <div id="modal-pers-title" class="font-mono text-lg font-bold text-amber-400 px-4 py-2 bg-zinc-950 border border-zinc-800 rounded-xl">
+          The Patient One
+        </div>
+        <p id="modal-pers-desc" class="text-xs text-zinc-400 leading-relaxed">
           Breathes deeply. Convinced waiting builds spiritual resilience.
         </p>
-        <div class="p-3 bg-zinc-950 border border-zinc-800 rounded-xl text-xs text-zinc-400 text-left space-y-1">
-          <div>• <b>Tolerance:</b> Infinite</div>
-          <div>• <b>Expectation of Reward:</b> 0%</div>
-          <div>• <b>Queue Loyalty:</b> Unbreakable</div>
-        </div>
-        <button onclick="WaitlessApp.closePersonalityModal()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl text-sm transition">
+        <button onclick="WaitlessApp.closePersonalityModal()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-xs font-mono text-zinc-200 transition">
           Return to Queue
         </button>
       </div>
     </div>
 
     <div id="modal-exit" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div class="bg-zinc-900 border border-red-900/50 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl">
-        <div class="text-4xl">🚪</div>
-        <h3 class="font-display text-2xl font-bold text-white">Abandon the Queue?</h3>
-        <p class="text-sm text-zinc-300 leading-relaxed">
-          If you exit now, your session will end immediately. You will be permanently catalogued as a <b>Former Waiter</b> who gave up waiting for nothing.
+      <div class="bg-zinc-900 border border-red-900/60 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl">
+        <div class="text-4xl">⚠️</div>
+        <h3 class="font-display text-2xl font-bold text-white">Exit The Queue?</h3>
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Leaving will forfeit your current queue spot. You will receive no compensation, no answers, and will enter the <strong class="text-zinc-200">Former Waiter Archive</strong>.
         </p>
-        <div class="p-3 bg-red-950/30 border border-red-900/50 rounded-xl text-xs text-red-300">
-          ⚠️ Warning: You will miss absolutely nothing.
-        </div>
-        <div class="space-y-3 pt-2">
-          <button onclick="WaitlessApp.closeExitModal()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl text-sm transition">
-            Stay and Keep Waiting (Recommended)
+        <div class="pt-2 space-y-3">
+          <button onclick="WaitlessApp.confirmExit()" class="w-full py-3.5 bg-red-600 hover:bg-red-500 text-white font-display font-bold text-sm rounded-xl shadow-lg transition">
+            YES, I SURRENDER MY WAIT
           </button>
-          <button onclick="WaitlessApp.confirmExit()" class="w-full py-2.5 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl text-xs transition">
-            Yes, Give Up & Exit
+          <button onclick="WaitlessApp.closeExitModal()" class="w-full py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-mono text-xs rounded-xl transition">
+            Never Mind, I&#39;ll Keep Waiting
           </button>
         </div>
       </div>
@@ -356,94 +431,103 @@
 
     <div id="modal-why-waiting" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl">
-        <div class="text-4xl">❓</div>
-        <h3 class="font-display text-xl font-bold text-white">Why Am I Waiting?</h3>
-        <div id="why-waiting-answer" class="text-lg font-display font-extrabold text-amber-400 italic py-2">
+        <div class="text-4xl">🤔</div>
+        <h3 class="font-display text-2xl font-bold text-white">Why Are You Waiting?</h3>
+        <div id="why-waiting-answer" class="text-base font-display font-bold text-amber-400 italic p-4 bg-zinc-950 border border-zinc-800 rounded-xl">
           &quot;Because you joined.&quot;
         </div>
         <p class="text-xs text-zinc-400">
-          The server has spoken. Please do not question the fundamental principles of the queue.
+          This answer is authoritative, legally non-binding, and provides zero clarity.
         </p>
-        <button onclick="WaitlessApp.closeWhyWaitingModal()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl text-sm transition">
-          I Understand
+        <button onclick="WaitlessApp.closeWhyWaitingModal()" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-xs font-mono text-zinc-200 transition">
+          Accept This Non-Answer
         </button>
       </div>
     </div>
 
-
-
     <!-- SCREEN 5: FORMER WAITER SCREEN -->
-    <section id="screen-former-waiter" class="screen-container hidden max-w-xl mx-auto w-full space-y-6 py-6">
+    <section id="screen-former-waiter" class="screen-container hidden max-w-2xl mx-auto w-full space-y-6 py-6">
       <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 text-center space-y-6 shadow-2xl">
-        <div class="text-5xl">🛑</div>
-        <div>
-          <span class="px-3 py-1 rounded-full bg-zinc-800 text-zinc-400 text-xs font-mono uppercase">Status: Former Waiter</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mt-3">You Left The Queue</h2>
-          <p class="text-xs text-zinc-400 mt-1">Your lack of patience has been formally recorded.</p>
+        <div class="space-y-2">
+          <span class="text-4xl">🚪</span>
+          <h2 class="font-display text-3xl font-extrabold text-white">You Have Left The Queue</h2>
+          <p class="text-xs text-zinc-400">Your departure has been recorded. Nothing was gained or lost.</p>
         </div>
-        <div class="grid grid-cols-2 gap-3 p-4 bg-zinc-950 rounded-2xl border border-zinc-800 text-left text-xs">
-          <div>
-            <span class="text-zinc-500 font-mono">Waiter:</span>
-            <div id="fw-name" class="font-bold text-zinc-200 mt-0.5">--</div>
+        <div class="grid grid-cols-2 gap-3 max-w-md mx-auto text-left text-xs">
+          <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-800">
+            <span class="text-zinc-500 font-mono text-[10px] uppercase">Alias:</span>
+            <div id="fw-name" class="font-bold text-zinc-200 text-sm">--</div>
           </div>
-          <div>
-            <span class="text-zinc-500 font-mono">Time Waited:</span>
-            <div id="fw-duration" class="font-mono font-bold text-amber-400 mt-0.5">-- seconds</div>
+          <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-800">
+            <span class="text-zinc-500 font-mono text-[10px] uppercase">Time Waited:</span>
+            <div id="fw-duration" class="font-bold text-amber-400 text-sm">--</div>
           </div>
-          <div>
-            <span class="text-zinc-500 font-mono">Last Position:</span>
-            <div id="fw-pos" class="font-mono font-bold text-zinc-200 mt-0.5">#--</div>
+          <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-800">
+            <span class="text-zinc-500 font-mono text-[10px] uppercase">Last Position:</span>
+            <div id="fw-pos" class="font-bold text-zinc-200 text-sm">--</div>
           </div>
-          <div>
-            <span class="text-zinc-500 font-mono">Personality:</span>
-            <div id="fw-personality" class="font-bold text-zinc-200 mt-0.5">--</div>
+          <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-800">
+            <span class="text-zinc-500 font-mono text-[10px] uppercase">Personality:</span>
+            <div id="fw-personality" class="font-bold text-amber-300 text-sm">--</div>
           </div>
-          <div class="col-span-2">
-            <span class="text-zinc-500 font-mono">Patience at Exit:</span>
-            <div id="fw-patience" class="font-mono font-bold text-zinc-200 mt-0.5">--%</div>
+          <div class="p-3 bg-zinc-950 rounded-xl border border-zinc-800 col-span-2">
+            <span class="text-zinc-500 font-mono text-[10px] uppercase">Final Patience:</span>
+            <div id="fw-patience" class="font-bold text-zinc-200 text-sm">--</div>
           </div>
         </div>
-        <div class="space-y-3 text-left">
-          <h4 class="font-mono text-xs text-zinc-400 uppercase tracking-wider">Wall of Former Waiters</h4>
-          <div class="overflow-x-auto max-h-48 rounded-xl border border-zinc-800 bg-zinc-950 p-2">
+
+        <div class="pt-4 border-t border-zinc-800 space-y-3">
+          <div class="text-xs font-mono uppercase tracking-wider text-zinc-400">Former Waiters Archive</div>
+          <div class="max-h-48 overflow-y-auto rounded-xl border border-zinc-800 bg-zinc-950/60 p-2">
             <table class="w-full text-left">
               <thead>
-                <tr class="border-b border-zinc-800 text-[10px] font-mono text-zinc-500">
-                  <th class="pb-1.5">Name</th>
-                  <th class="pb-1.5">Waited</th>
-                  <th class="pb-1.5">Position</th>
-                  <th class="pb-1.5">Personality</th>
+                <tr class="border-b border-zinc-800 text-[10px] font-mono text-zinc-500 uppercase">
+                  <th class="py-1">Name</th>
+                  <th class="py-1">Waited</th>
+                  <th class="py-1">Pos</th>
+                  <th class="py-1">Persona</th>
                 </tr>
               </thead>
               <tbody id="former-waiters-archive"></tbody>
             </table>
           </div>
         </div>
-        <button onclick="WaitlessApp.waitAgain()" class="w-full py-3.5 bg-zinc-800 hover:bg-zinc-700 text-white font-semibold rounded-xl text-sm transition">
-          Return to Landing Page
-        </button>
+
+        <div class="pt-4">
+          <button onclick="WaitlessApp.waitAgain()" class="px-8 py-3.5 bg-amber-400 hover:bg-amber-300 text-zinc-950 font-display font-bold text-sm rounded-xl shadow-lg transition">
+            WAIT AGAIN ↺
+          </button>
+        </div>
       </div>
     </section>
 
-    <!-- SCREEN 6: FINAL REVEAL & COMPLETION -->
-    <section id="screen-completion" class="screen-container hidden max-w-xl mx-auto w-full space-y-8 py-8 text-center relative">
+    <!-- SCREEN 6: ITEM 6: REFINED EMPTY/FINAL REVEAL -->
+    <section id="screen-completion" class="screen-container hidden max-w-xl mx-auto w-full text-center space-y-6 py-6 relative">
       <div id="confetti-container" class="pointer-events-none absolute inset-0 overflow-hidden"></div>
-      <div class="bg-zinc-900 border border-amber-400/40 rounded-3xl p-8 sm:p-10 shadow-2xl space-y-6 relative z-10">
+      <div class="bg-zinc-900 border border-amber-400/40 rounded-3xl p-8 sm:p-10 shadow-2xl space-y-6 relative z-10 text-center">
         <div class="space-y-3">
-          <div class="text-5xl animate-bounce">🎉</div>
+          <!-- Minimalist Bureaucratic Void Reticle (Zero / Empty Symbol) -->
+          <div class="mx-auto w-16 h-16 sm:w-20 sm:h-20 relative flex items-center justify-center my-1 select-none">
+            <div class="absolute inset-0 rounded-full border border-zinc-800"></div>
+            <div class="absolute inset-1.5 rounded-full border border-amber-400/30 border-dashed animate-[spin_30s_linear_infinite]"></div>
+            <div class="absolute w-full h-px bg-zinc-800/80"></div>
+            <div class="absolute h-full w-px bg-zinc-800/80"></div>
+            <div class="relative font-mono text-2xl font-light text-amber-400/90 tracking-tighter">∅</div>
+          </div>
           <h2 class="font-display text-3xl sm:text-4xl font-black text-amber-400 tracking-tight">
-            IT'S YOUR TURN!
+            IT&#39;S YOUR TURN!
           </h2>
-          <div class="inline-block px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-700 text-emerald-400 font-mono text-xs font-bold">
+          <div class="inline-block px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-700 text-emerald-400 font-mono text-xs font-bold select-none">
             YOU REACHED POSITION #1
           </div>
         </div>
-        <div class="py-4 space-y-3 border-y border-zinc-800">
-          <div class="text-3xl font-display font-extrabold text-white">
-            &quot;There is nothing here.&quot;
+        <div class="py-5 space-y-3 border-y border-zinc-800/80">
+          <div class="text-[10px] font-mono uppercase tracking-[0.25em] text-amber-400/70 select-none">Official Finding</div>
+          <div class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
+            &ldquo;There is nothing here.&rdquo;
           </div>
-          <p class="text-sm text-zinc-400 leading-relaxed">
-            Dear <span id="completion-user" class="font-bold text-zinc-200">Waiter</span>, you climbed the ranks. You endured the chaos. You arrived at the front of the queue, only to discover what we promised from the very beginning: absolutely nothing.
+          <p class="text-xs sm:text-sm text-zinc-400 max-w-md mx-auto leading-relaxed font-sans">
+            Dear <span id="completion-user" class="font-bold text-zinc-200">Waiter</span>, you climbed the ranks. You endured the chaos. You arrived at the front of the queue, only to discover what we promised from the very beginning: <span class="text-zinc-300 font-medium">absolutely nothing</span>.
           </p>
         </div>
         <div class="pt-2">
@@ -511,16 +595,31 @@
         </div>
       </div>
 
-      <!-- Printable Certificate -->
-      <div id="printable-certificate" class="bg-zinc-900 border-4 border-amber-500/80 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl relative overflow-hidden">
-        <div class="absolute inset-2 border-2 border-amber-500/30 rounded-2xl pointer-events-none"></div>
-        <div class="space-y-1">
+      <!-- ITEM 7: ENHANCED PRINTABLE CERTIFICATE WITH OFFICIAL BUREAUCRATIC ACCENTS -->
+      <div id="printable-certificate" class="bg-zinc-900 border-2 border-amber-500/70 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl relative overflow-hidden">
+        <!-- Double fine geometric inner border -->
+        <div class="absolute inset-2 sm:inset-3 border border-amber-500/30 rounded-2xl pointer-events-none"></div>
+        <div class="absolute inset-3 sm:inset-4 border border-dashed border-zinc-800 rounded-xl pointer-events-none"></div>
+
+        <!-- Geometric corner tick marks -->
+        <div class="absolute top-4 left-4 text-amber-400/40 text-xs font-mono select-none">┌</div>
+        <div class="absolute top-4 right-4 text-amber-400/40 text-xs font-mono select-none">┐</div>
+        <div class="absolute bottom-4 left-4 text-amber-400/40 text-xs font-mono select-none">└</div>
+        <div class="absolute bottom-4 right-4 text-amber-400/40 text-xs font-mono select-none">┘</div>
+
+        <!-- Microprint Document Header -->
+        <div class="text-[8px] sm:text-[9px] font-mono tracking-[0.25em] text-zinc-500 uppercase border-b border-zinc-800/80 pb-2 select-none">
+          DOC REF: WAITLESS-FORM-00-VOID // DEPARTMENT OF UNPRODUCTIVE REPOSE
+        </div>
+
+        <div class="space-y-1 pt-1">
           <div class="text-xs font-serif uppercase tracking-[0.3em] text-amber-400">Official Accolade</div>
           <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white tracking-wide">
             CERTIFICATE OF MEANINGLESS WAITING
           </h2>
           <p class="text-[11px] text-zinc-400 italic">Issued by the Supreme Bureau of Empty Queues</p>
         </div>
+
         <div class="py-4 space-y-3">
           <p class="text-xs text-zinc-400 uppercase tracking-widest">This certifies that</p>
           <div id="cert-name" class="font-display text-3xl font-black text-amber-300 underline decoration-amber-500/50 underline-offset-8">
@@ -530,6 +629,18 @@
             has demonstrated extraordinary fortitude by actively waiting for <span id="cert-duration" class="font-bold text-amber-400 font-mono">0 SECONDS</span> in the pursuit of absolutely nothing, while embodying the persona of <span id="cert-personality" class="font-bold text-zinc-100">The Patient One</span>.
           </p>
         </div>
+
+        <!-- Bureaucratic Official Seal / Stamp -->
+        <div class="flex items-center justify-center my-2">
+          <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full border-2 border-amber-400/80 p-1 flex items-center justify-center rotate-[-6deg] shadow-sm select-none">
+            <div class="w-full h-full rounded-full border border-dashed border-amber-400/60 p-2 flex flex-col items-center justify-center text-center">
+              <span class="text-[7px] sm:text-[8px] font-mono uppercase tracking-widest text-amber-400 font-bold leading-none">CERTIFIED</span>
+              <span class="text-sm sm:text-base font-serif font-black text-amber-300 my-0.5 leading-none">0%</span>
+              <span class="text-[6px] sm:text-[7px] font-mono tracking-tight text-amber-400/90 uppercase leading-none">VOID APPROVED</span>
+            </div>
+          </div>
+        </div>
+
         <div class="grid grid-cols-3 gap-2 pt-4 border-t border-zinc-800 text-[10px] font-mono text-zinc-400">
           <div>
             <div class="text-zinc-600">VERIFIED DATE</div>
@@ -537,7 +648,7 @@
           </div>
           <div>
             <div class="text-zinc-600">OFFICIAL SEAL</div>
-            <div class="text-amber-400 font-bold mt-0.5">★ 0% OUTCOME ★</div>
+            <div class="text-amber-400 font-bold mt-0.5">&starf; 0% OUTCOME &starf;</div>
           </div>
           <div>
             <div class="text-zinc-600">SERIAL NUMBER</div>
@@ -548,7 +659,7 @@
 
       <!-- Action Buttons -->
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
-        <button onclick="WaitlessApp.printCertificate()" class="w-full sm:w-auto px-6 py-3 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-xs font-mono text-zinc-200 flex items-center justify-center">
+        <button onclick="WaitlessApp.printCertificate()" class="w-full sm:w-auto px-6 py-3 bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-xl text-xs font-mono text-zinc-200 flex items-center justify-center transition">
           Print / Save Certificate
         </button>
         <!-- PRD Section 25: WAIT AGAIN must return to Landing Page without creating an instant session -->
@@ -559,9 +670,9 @@
     </section>
   </main>
 
-  <footer class="border-t border-zinc-800/60 py-6 text-center text-xs text-zinc-500 font-mono">
+  <footer class="border-t border-zinc-200 py-6 text-center text-xs text-zinc-500 font-mono bg-white">
     <div class="max-w-6xl mx-auto px-4">
-      WAITLESS © 2026 — Built for the Useless Projects Hackathon. Purpose accomplished: 0%.
+      WAITLESS &copy; 2026 &mdash; Built for the Useless Projects Hackathon. Purpose accomplished: 0%.
     </div>
   </footer>
 
